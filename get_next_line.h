@@ -3,31 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:25:20 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/21 17:49:02 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/08/23 19:57:21 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+# define BUFFER_SIZE 7
 
+# include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
 
 typedef struct s_line
 {
 	void			*content;
-	struct t_line	*next;
+	struct s_line	*next;
 }	t_line;
 
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-
 char			*get_next_line(int fd);
-char			*ft_strchr(char *s, int c);
+char			*ft_strchr(char *s, char c);
+size_t			ft_strlen(const char *x);
+char			*run_line(char *line);
 
-# endif
+
+
 #endif
