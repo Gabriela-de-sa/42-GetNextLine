@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:25:20 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/23 19:57:21 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/08/26 00:11:55 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,10 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-typedef struct s_line
-{
-	void			*content;
-	struct s_line	*next;
-}	t_line;
-
-
 char			*get_next_line(int fd);
-char			*ft_strchr(char *s, char c);
+int				ft_strchr(char *s);
 size_t			ft_strlen(const char *x);
-char			*run_line(char *line);
-
-
+char			*ft_strdup(const char *s);
+char			*ft_strjoin(char const *s1, char const *s2);
 
 #endif
