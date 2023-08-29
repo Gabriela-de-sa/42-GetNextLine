@@ -6,11 +6,12 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/27 22:21:39 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:32:43 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 char	*ft_before_break(char *line)
 {
@@ -24,33 +25,37 @@ char	*ft_before_break(char *line)
 		index++;
 	if (str[index] == '\0')
 	{
-		return_line = malloc(index + 1 * sizeof(char *));
+		return_line = (char *) malloc(index + 1);
 		if (return_line == NULL)
 			return (NULL);
 		return_line = ft_strncpy(return_line, str, index);
 	}
 	else
 	{
-		return_line = malloc(index + 2 * sizeof(char *));
+		return_line = (char *) malloc(index + 1);
 		if (return_line == NULL)
 			return (NULL);
 		return_line = ft_strncpy(return_line, str, index);
 	}
+	printf("%s", return_line);
 	return (return_line);
 }
 
-char	*ft_after_break(char *str, int index, char *backup)
+/*char	*ft_after_break(char *str, int index, char *backup)
 {
 	int		len_str;
+	char	*temp_backup;
 
 	len_str = ft_strlen(str);
+	temp_backup = backup;
 	while (index <= len_str)
 	{
-		backup[index] = str[index];
+		temp_backup[index] = str[index];
 		index++;
 	}
-	return (backup);
-}
+	printf("%s", temp_backup);
+	return (temp_backup);
+}*/
 
 char	*ft_return_line(char *line, char *backup)
 {
@@ -65,9 +70,15 @@ char	*ft_return_line(char *line, char *backup)
 		index++;
 	len_str = ft_strlen(str);
 	if (len_str >= index)
-		backup = ft_after_break(str, index, backup);
+	{
+		while (index <= len_str)
+		{
+			backup[index] = str[index];
+			index++;
+		}
+	}
 	entire_line = ft_before_break(str);
-	free((char *)str);
+	printf("%s", entire_line);
 	return (entire_line);
 }
 
@@ -98,7 +109,7 @@ char	*get_next_line(int fd)
 	return (ft_return_line(line, backup));
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int		file;
 	int		i;
@@ -110,4 +121,4 @@ char	*get_next_line(int fd)
 		get_next_line(file);
 		i++;
 	}
-}*/
+}

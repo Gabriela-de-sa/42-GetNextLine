@@ -1,5 +1,0 @@
-free onde aloco memoria com malloc
-
-if (read_bytes < 0)
-	return (NULL);
-

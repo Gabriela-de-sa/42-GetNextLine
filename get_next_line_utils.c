@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:45:21 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/27 22:25:01 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:22:34 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_strchr(char *s)
 	return (-1);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	int		count;
 
@@ -41,7 +41,7 @@ size_t	ft_strlen(const char *s)
 	return (count);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*str_dup;
 	int		count_bytes;
@@ -61,7 +61,7 @@ char	*ft_strdup(const char *s)
 	return (str_dup);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*new_string;
 	int		len_s1;
@@ -83,14 +83,15 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new_string);
 }
 
-char	*ft_strncpy(char *dest, const char *src, size_t n)
+char	*ft_strncpy(char *dest, char *src, size_t n)
 {
 	size_t		index;
 
 	index = 0;
-	while (index < n - 1)
+	while (index < n + 1)
 	{
 		dest[index] = src[index];
+		index++;
 	}
 	dest[index] = '\0';
 	return (dest);
