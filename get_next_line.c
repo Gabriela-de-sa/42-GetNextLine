@@ -6,7 +6,7 @@
 /*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/29 18:10:16 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:19:48 by gde-sa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_next_line(int fd)
 	return (ft_return_line(line, &backup));
 }
 
-/*int	main(void)
+int	main(void)
 {
 	int		file;
 	int		i;
@@ -98,4 +98,4 @@ char	*get_next_line(int fd)
 		printf("%s", get_next_line(file));
 		i++;
 	}
-}*/
+}
