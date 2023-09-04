@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/29 18:19:48 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/03 21:12:59 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_return_line(char *line, char **backup)
 	char	*entire_line;
 
 	index = 0;
-	index = ft_strchr(line);
+	index = ft_source_n(line);
 	entire_line = ft_substr(line, 0, index);
 	if (index >= 0)
 		(*backup) = ft_strdup(&line[index + 1]);
@@ -57,12 +57,33 @@ char	*ft_return_line(char *line, char **backup)
 	return (entire_line);
 }
 
+char	*run_line(int fd, char *line, char *buffer)
+{
+	int			read_bytes;
+
+	read_bytes = 1;
+	while (read_bytes > 0 && !(ft_source_n(line) >= 0))
+	{
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (read_bytes == -1)
+			return (NULL);
+		buffer[read_bytes] = '\0';
+		line = ft_strjoin(line, buffer);
+	}
+	if (line[0] == '\0')
+	{
+		clear_memory(line, NULL);
+		return (NULL);
+	}
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*line;
-	int			read_bytes;
 	char		*buffer;
 	static char	*backup;
+	char		*temp;
 
 	if (fd < 0 || BUFFER_SIZE == 0)
 		return (NULL);
@@ -72,18 +93,17 @@ char	*get_next_line(int fd)
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (buffer == NULL)
 		return (NULL);
-	read_bytes = 1;
-	while (read_bytes > 0 && !(ft_strchr(line) >= 0))
+	temp = run_line(fd, line, buffer);
+	if (temp == NULL)
 	{
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes == -1)
-			return (NULL);
-		buffer[read_bytes] = '\0';
-		line = ft_strjoin(line, buffer);
-	}
-	if (line[0] == '\0')
+		clear_memory(buffer, line);
 		return (NULL);
-	return (ft_return_line(line, &backup));
+	}
+	else
+	{
+		clear_memory(buffer, NULL);
+		return (ft_return_line(temp, &backup));
+	}
 }
 
 int	main(void)

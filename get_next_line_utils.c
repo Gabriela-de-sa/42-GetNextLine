@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:45:21 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/08/29 14:56:27 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/03 21:02:04 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr(char *s)
+int	ft_source_n(char *s)
 {
 	int	index;
 
@@ -83,16 +83,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (new_string);
 }
 
-char	*ft_strncpy(char *dest, char *src, size_t n)
+void	*clear_memory(char *s1, char *s2)
 {
-	size_t		index;
-
-	index = 0;
-	while (index < n + 1)
-	{
-		dest[index] = src[index];
-		index++;
-	}
-	dest[index] = '\0';
-	return (dest);
+	if (s1 != NULL)
+		free(s1);
+	if (s2 != NULL)
+		free(s2);
+	return (NULL);
 }
