@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 11:25:20 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/02 23:38:55 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:53:16 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char			*ft_strdup(char *s);
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_return_line(char *line, char **backup);
 char			*ft_substr(char *s, unsigned int start, size_t len);
-char			*run_line(int fd, char *line, char *buffer);
+char			*run_line(int fd, char *line);
 void			*clear_memory(char *s1, char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:45:21 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/03 21:02:04 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/04 13:45:23 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++index])
 		new_string[len_s1 + index] = s2[index];
 	new_string[len_s1 + index] = '\0';
+	free(s1);
 	return (new_string);
 }
 
