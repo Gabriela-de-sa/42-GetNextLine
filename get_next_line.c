@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/04 17:57:44 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/05 16:57:32 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*backup;
 	char		*temp;
-	char		*entireline;
 
 	if (fd < 0 || BUFFER_SIZE == 0)
 		return (NULL);
@@ -96,9 +95,9 @@ char	*get_next_line(int fd)
 		return (clear_memory(temp, NULL));
 	else
 	{
-		entireline = ft_return_line(temp, &backup);
+		line = ft_return_line(temp, &backup);
 		free(temp);
-		return (entireline);
+		return (line);
 	}
 }
 
