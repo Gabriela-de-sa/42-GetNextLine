@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/06 18:18:45 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/07 22:42:35 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {
@@ -26,7 +25,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len >= len_s)
 		len = len_s - start;
-	substring = (char *) malloc(len + 2);
+	substring = calloc(len + 2, sizeof(char *));
 	if (substring == NULL)
 		return (NULL);
 	i = 0;
@@ -39,31 +38,29 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (substring);
 }
 
-char	*ft_return_line(char **backup)
+char	*ft_return_line(char *line, char **backup)
 {
 	int		index;
 	char	*entire_line;
-	char	*temp_backup;
 
 	index = 0;
-	index = ft_source_n(*backup);
+	index = ft_source_n(line);
+	entire_line = ft_substr(line, 0, index);
 	if (index >= 0)
 	{
-		entire_line = ft_substr(*backup, 0, index);
-		temp_backup = *backup;
-		if (*backup[0] != '\0')
+		if (*backup != 0)
 			free(*backup);
-		(*backup) = ft_strdup(&temp_backup[index + 1]);
+		(*backup) = ft_strdup(&line[index + 1]);
 	}
 	else
 	{
-		entire_line = NULL;
-		return (*backup);
+		free(*backup);
+		*backup = NULL;
 	}
 	return (entire_line);
 }
 
-char	*run_line(int fd, char **backup)
+char	*run_line(int fd, char **line)
 {
 	int			read_bytes;
 	char		*buffer;
@@ -72,58 +69,57 @@ char	*run_line(int fd, char **backup)
 	if (buffer == NULL)
 		return (NULL);
 	read_bytes = 1;
-	while (read_bytes > 0 && !(ft_source_n(*backup) >= 0))
+	while (read_bytes > 0 && !(ft_source_n(*line) >= 0))
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
 			return (clear_memory(NULL, buffer));
 		buffer[read_bytes] = '\0';
-		if (*backup == NULL)
-			*backup = ft_strdup(buffer);
-		else
-			*backup = ft_strjoin(*backup, buffer);
+		*line = ft_strjoin(*line, buffer);
 	}
-	if (*backup[0] == '\0')
-		return (clear_memory(*backup, buffer));
+	if (*line[0] == '\0')
+		return (clear_memory(*line, buffer));
 	free(buffer);
-	return (*backup);
+	return (*line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*backup;
 	char		*line;
+	static char	*backup;
 
 	if (fd < 0 || BUFFER_SIZE == 0)
 		return (NULL);
 	if (!backup)
-		backup = NULL;
-	run_line(fd, &backup);
-	if (backup == NULL)
-		return (NULL);
+		backup = "";
+	line = ft_strdup(backup);
+	if (line == NULL)
+		return (clear_memory(line, NULL));
+	line = run_line(fd, &line);
+	if (line == NULL)
+		return (clear_memory(line, NULL));
 	else
 	{
-		line = ft_return_line(&backup);
+		line = ft_return_line(line, &backup);
 		return (line);
 	}
 }
 
+/*#include <stdio.h>
+
 int	main(void)
 {
 	int		file;
+	char	*result;
 	int		i;
 
 	file = open("arquivo.txt", O_RDONLY);
 	i = 0;
 	while (i < 15)
 	{
-		char *result;
-	
 		result = get_next_line(file);
 		printf("%s", result);
-		if (result == NULL)
-			break ;
 		free(result);
 		i++;
 	}
-}
+}*/
