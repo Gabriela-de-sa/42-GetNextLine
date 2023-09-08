@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/07 22:42:35 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:45:03 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,30 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (substring);
 }
 
-char	*ft_return_line(char *line, char **backup)
+char	*ft_return_line(char **backup)
 {
 	int		index;
 	char	*entire_line;
+	char	*temp_backup;
 
 	index = 0;
-	index = ft_source_n(line);
-	entire_line = ft_substr(line, 0, index);
-	if (index >= 0)
-	{
-		if (*backup != 0)
-			free(*backup);
-		(*backup) = ft_strdup(&line[index + 1]);
-	}
-	else
+	index = ft_source_n(*backup);
+	entire_line = ft_substr(*backup, 0, index);
+	if (index < 0)
 	{
 		free(*backup);
 		*backup = NULL;
 	}
+	if (index >= 0)
+	{
+		temp_backup = ft_strdup(*backup + index + 1);
+		free(*backup);
+		*backup = temp_backup;
+	}
 	return (entire_line);
 }
 
-char	*run_line(int fd, char **line)
+char	*run_line(int fd, char **backup)
 {
 	int			read_bytes;
 	char		*buffer;
@@ -69,18 +70,21 @@ char	*run_line(int fd, char **line)
 	if (buffer == NULL)
 		return (NULL);
 	read_bytes = 1;
-	while (read_bytes > 0 && !(ft_source_n(*line) >= 0))
+	while (read_bytes > 0 && !(ft_source_n(*backup) >= 0))
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
 			return (clear_memory(NULL, buffer));
 		buffer[read_bytes] = '\0';
-		*line = ft_strjoin(*line, buffer);
+		if (!(*backup))
+			*backup = ft_strdup(buffer);
+		else
+			*backup = ft_strjoin(*backup, buffer);
 	}
-	if (*line[0] == '\0')
-		return (clear_memory(*line, buffer));
+	if (*backup[0] == '\0')
+		return (clear_memory(*backup, buffer));
 	free(buffer);
-	return (*line);
+	return (*backup);
 }
 
 char	*get_next_line(int fd)
@@ -88,24 +92,19 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*backup;
 
-	if (fd < 0 || BUFFER_SIZE == 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!backup)
-		backup = "";
-	line = ft_strdup(backup);
-	if (line == NULL)
-		return (clear_memory(line, NULL));
-	line = run_line(fd, &line);
-	if (line == NULL)
-		return (clear_memory(line, NULL));
+	backup = run_line(fd, &backup);
+	if (backup == NULL)
+		return (NULL);
 	else
 	{
-		line = ft_return_line(line, &backup);
+		line = ft_return_line(&backup);
 		return (line);
 	}
 }
 
-/*#include <stdio.h>
+#include <stdio.h>
 
 int	main(void)
 {
@@ -122,4 +121,4 @@ int	main(void)
 		free(result);
 		i++;
 	}
-}*/
+}
