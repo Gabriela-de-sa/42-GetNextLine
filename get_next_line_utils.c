@@ -6,7 +6,7 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:45:21 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/08 16:03:44 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:12:04 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_strdup(char *s)
 	int		index;
 
 	count_bytes = ft_strlen(s);
-	str_dup = calloc(count_bytes + 1, sizeof(char));
+	str_dup = ft_calloc(count_bytes + 1, sizeof(char));
 	if (str_dup == NULL)
 		return (NULL);
 	str_dup[count_bytes] = '\0';
@@ -70,7 +70,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
-	new_string = malloc((len_s1 + len_s2 + 1) * sizeof(char *));
+	new_string = (char *)malloc((len_s1 + len_s2) * sizeof(char) + 1);
 	if (new_string == NULL)
 		return (new_string);
 	index = -1;

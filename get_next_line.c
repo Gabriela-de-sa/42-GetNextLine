@@ -6,11 +6,35 @@
 /*   By: gabriela <gabriela@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/08 17:45:03 by gabriela         ###   ########.fr       */
+/*   Updated: 2023/09/10 19:16:59 by gabriela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_calloc(size_t nitems, size_t size)
+{
+	int		*p;
+	size_t	overflow;
+	size_t	index;
+	char	*ptr;
+
+	overflow = nitems * size;
+	if (nitems != 0 && (overflow / nitems) != size)
+		return (NULL);
+	p = malloc(nitems * size);
+	if (p == NULL)
+		return (p);
+	index = 0;
+	ptr = (char *)p;
+	while (index < overflow)
+	{
+		*ptr = '\0';
+		ptr++;
+		index++;
+	}
+	return (p);
+}
 
 char	*ft_substr(char *s, unsigned int start, size_t len)
 {
@@ -25,7 +49,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		return (ft_strdup(""));
 	if (len >= len_s)
 		len = len_s - start;
-	substring = calloc(len + 2, sizeof(char *));
+	substring = ft_calloc(len + 2, sizeof(char *));
 	if (substring == NULL)
 		return (NULL);
 	i = 0;
@@ -74,7 +98,7 @@ char	*run_line(int fd, char **backup)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (clear_memory(NULL, buffer));
+			return (clear_memory(*backup, buffer));
 		buffer[read_bytes] = '\0';
 		if (!(*backup))
 			*backup = ft_strdup(buffer);
@@ -104,7 +128,7 @@ char	*get_next_line(int fd)
 	}
 }
 
-#include <stdio.h>
+/*#include <stdio.h>
 
 int	main(void)
 {
@@ -121,4 +145,4 @@ int	main(void)
 		free(result);
 		i++;
 	}
-}
+}*/
