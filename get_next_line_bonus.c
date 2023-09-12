@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/12 13:05:45 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/12 13:09:07 by gde-sa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,16 @@ char	*run_line(int fd, char **backup)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*backup;
+	static char	*backup[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	backup = run_line(fd, &backup);
-	if (backup == NULL)
+	backup[fd] = run_line(fd, &backup[fd]);
+	if (backup[fd] == NULL)
 		return (NULL);
 	else
 	{
-		line = ft_return_line(&backup);
+		line = ft_return_line(&backup[fd]);
 		return (line);
 	}
 }
