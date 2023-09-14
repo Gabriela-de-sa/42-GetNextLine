@@ -6,11 +6,11 @@
 /*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 12:45:21 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/12 13:12:45 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/12 18:31:23 by gde-sa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_source_n(char *s)
 {

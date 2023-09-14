@@ -6,11 +6,11 @@
 /*   By: gde-sa <gde-sa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 16:06:06 by gde-sa            #+#    #+#             */
-/*   Updated: 2023/09/12 13:09:07 by gde-sa           ###   ########.fr       */
+/*   Updated: 2023/09/12 18:31:19 by gde-sa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*clear_memory(char *s1, char *s2)
 {
