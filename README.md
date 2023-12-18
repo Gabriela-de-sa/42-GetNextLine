@@ -6,6 +6,12 @@
 	<b><i>Reading a line on a fd is way too tedious</i></b><br>
 </p>
 
+<div align="center">
+	<br>
+  <img  height="130em"  width="15%" src="https://game.42sp.org.br/static/assets/achievements/get_next_linem.png" />
+    <br>
+</div>
+
 ## 💡 About the project
 
 You will learn how to open, read and close files on an OS.
